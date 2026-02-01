@@ -36,7 +36,10 @@
         "learnMore": "Pelajari Lebih Lanjut",
         "searchResults": "Hasil pencarian untuk",
         "allCafes": "Semua Cafe",
-        "placesFound": "tempat ditemukan"
+        "placesFound": "tempat ditemukan",
+        "sortBy": "Urutkan",
+        "ratingHighLow": "Rating: Tinggi ke Rendah",
+        "ratingLowHigh": "Rating: Rendah ke Tinggi"
     },
     "about": {
         "title": "Tentang Kami",

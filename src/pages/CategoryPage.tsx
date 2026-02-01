@@ -13,10 +13,16 @@ const CategoryPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const { latitude, longitude } = useLocationStore();
   const { t } = useTranslation();
+  const [sortOrder, setSortOrder] = useState<'high' | 'low'>('high');
 
   const categoryName = category 
     ? t(`home.categories.${category}`, category.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())) 
     : '';
+
+  const sortedCafes = [...cafes].sort((a, b) => {
+    if (sortOrder === 'high') return b.rating - a.rating;
+    return a.rating - b.rating;
+  });
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -49,11 +55,25 @@ const CategoryPage: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 min-h-screen">
-      <div className="mb-8 text-center">
-        <h1 className="text-3xl font-heading font-bold text-brown-600 mb-2">
-          {categoryName}
-        </h1>
-        <p className="text-zinc-500">{t('home.popularSubtitle')}</p>
+      <div className="mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+          <h1 className="text-3xl font-heading font-bold text-brown-600 mb-1">
+            {categoryName}
+          </h1>
+          <p className="text-zinc-500">{t('home.popularSubtitle')}</p>
+        </div>
+        
+        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-zinc-200 shadow-sm">
+          <span className="text-sm text-zinc-500 font-medium">{t('common.sortBy')}:</span>
+          <select 
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value as 'high' | 'low')}
+            className="bg-transparent text-zinc-800 text-sm font-semibold focus:outline-none cursor-pointer"
+          >
+            <option value="high">{t('common.ratingHighLow')}</option>
+            <option value="low">{t('common.ratingLowHigh')}</option>
+          </select>
+        </div>
       </div>
 
       {loading ? (
@@ -62,7 +82,7 @@ const CategoryPage: React.FC = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {cafes.map((cafe) => (
+          {sortedCafes.map((cafe) => (
             <CafeCard key={cafe.place_id} cafe={cafe} />
           ))}
         </div>

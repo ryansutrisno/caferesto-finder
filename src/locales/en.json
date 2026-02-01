@@ -36,7 +36,10 @@
         "learnMore": "Learn More",
         "searchResults": "Search results for",
         "allCafes": "All Cafes",
-        "placesFound": "places found"
+        "placesFound": "places found",
+        "sortBy": "Sort by",
+        "ratingHighLow": "Rating: High to Low",
+        "ratingLowHigh": "Rating: Low to High"
     },
     "about": {
         "title": "About Us",

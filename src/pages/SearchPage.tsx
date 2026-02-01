@@ -15,6 +15,12 @@ const SearchPage: React.FC = () => {
   const [searchInput, setSearchInput] = useState(query);
   const { latitude, longitude } = useLocationStore();
   const { t } = useTranslation();
+  const [sortOrder, setSortOrder] = useState<'high' | 'low'>('high');
+
+  const sortedCafes = [...cafes].sort((a, b) => {
+    if (sortOrder === 'high') return b.rating - a.rating;
+    return a.rating - b.rating;
+  });
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -53,11 +59,27 @@ const SearchPage: React.FC = () => {
         </form>
       </div>
 
-      <div className="mb-6">
-        <h1 className="text-2xl font-heading font-bold text-zinc-900">
-          {query ? `${t('common.searchResults', 'Search results for')} "${query}"` : t('common.allCafes', 'All Cafes')}
-        </h1>
-        <p className="text-zinc-500">{cafes.length} {t('common.placesFound', 'places found')}</p>
+      <div className="mb-6 flex flex-col md:flex-row justify-between items-end gap-4">
+        <div>
+          <h1 className="text-2xl font-heading font-bold text-zinc-900">
+            {query ? `${t('common.searchResults', 'Search results for')} "${query}"` : t('common.allCafes', 'All Cafes')}
+          </h1>
+          <p className="text-zinc-500">{cafes.length} {t('common.placesFound', 'places found')}</p>
+        </div>
+
+        {cafes.length > 0 && (
+          <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-zinc-200 shadow-sm">
+            <span className="text-sm text-zinc-500 font-medium">{t('common.sortBy')}:</span>
+            <select 
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value as 'high' | 'low')}
+              className="bg-transparent text-zinc-800 text-sm font-semibold focus:outline-none cursor-pointer"
+            >
+              <option value="high">{t('common.ratingHighLow')}</option>
+              <option value="low">{t('common.ratingLowHigh')}</option>
+            </select>
+          </div>
+        )}
       </div>
 
       {loading ? (
@@ -66,7 +88,7 @@ const SearchPage: React.FC = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {cafes.map((cafe) => (
+          {sortedCafes.map((cafe) => (
             <CafeCard key={cafe.place_id} cafe={cafe} />
           ))}
         </div>
