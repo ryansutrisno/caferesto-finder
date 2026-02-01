@@ -5,6 +5,7 @@ import { getCafeDetails, getPhotoUrl } from '../services/api';
 import { Cafe } from '../types';
 import RatingBadge from '../components/ui/RatingBadge';
 import LeafletMap from '../components/ui/LeafletMap';
+import SEO from '../components/utils/SEO';
 import { useTranslation } from 'react-i18next';
 
 const DetailPage: React.FC = () => {
@@ -74,6 +75,12 @@ const DetailPage: React.FC = () => {
 
   return (
     <div className="bg-cream-50 min-h-screen pb-20">
+      <SEO 
+        title={cafe.name}
+        description={`Visit ${cafe.name} at ${cafe.address}. Rated ${cafe.rating}/5. Check opening hours and reviews.`}
+        image={activePhoto || undefined}
+        type="article"
+      />
       {/* Header Image */}
       <div className="relative h-auto min-h-[50vh] md:h-[50vh] bg-zinc-900 flex flex-col justify-end">
         <img 

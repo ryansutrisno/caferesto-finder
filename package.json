@@ -23,6 +23,7 @@
     "react-i18next": "^16.5.4",
     "react-leaflet": "4",
     "react-router-dom": "^7.13.0",
+    "react-helmet-async": "^2.0.4",
     "tailwind-merge": "^3.4.0",
     "zustand": "^5.0.10"
   },
@@ -44,7 +45,6 @@
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
     "vite": "^6.3.5",
-    "vite-plugin-trae-solo-badge": "^1.0.0",
     "vite-tsconfig-paths": "^5.1.4"
   }
 }

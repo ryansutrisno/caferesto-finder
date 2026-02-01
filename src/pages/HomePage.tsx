@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Hero from '../components/home/Hero';
 import CafeCard from '../components/cafe/CafeCard';
+import SEO from '../components/utils/SEO';
 import { getNearbyCafes } from '../services/api';
 import { Cafe } from '../types';
 import { Loader2, MapPin } from 'lucide-react';
@@ -36,6 +37,10 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title={cityName ? `Best Cafes in ${cityName}` : undefined}
+        description={t('home.heroSubtitle')}
+      />
       <Hero />
       
       <section className="container mx-auto px-4 py-16">
